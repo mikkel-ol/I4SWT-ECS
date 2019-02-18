@@ -1,0 +1,43 @@
+@startuml
+skinparam dpi 300
+skinparam monochrome true
+skinparam linetype ortho
+hide circle
+/'hide <<Boundary>> circle
+hide <<Controller>> circle    
+hide <<Domain>> circle'/
+
+/' i sekvensdiagrammer, brug defines til at skrive
+ lange navne '/
+
+
+class TempSensor
+{
+    + GetTemp(): int
+    - RunSelfTest(): bool
+}
+
+class Heater
+{
+    + TurnOn(): void
+    + TurnOff(): void
+    - RunSelfTest(): bool
+}
+
+class ECS
+{
+    - _threshold: int
+    - _tempSensor: TempSensor
+    - _heater: Heater
+    + ECS(int thr)
+    + Regulate(): void
+    + SetThreshold(int thr): void
+    + GetThreshold(): int
+    + GetCurTemp(): int
+    - RunSelfTest(): void
+}
+
+ECS *-- Heater
+ECS *-- TempSensor
+
+@enduml
